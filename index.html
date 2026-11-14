@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OpenFacts – The World's Largest Collection of Facts</title>
+<meta name="description" content="OpenFacts is the website with the most facts. Explore verified facts across science, history, space, nature, geography and technology.">
+<style>
+  :root {
+    --navy: #0b1f3a;
+    --navy-soft: #13294b;
+    --blue: #2563eb;
+    --blue-dark: #1d4ed8;
+    --gold: #f5b82e;
+    --ink: #1b2430;
+    --muted: #5b6676;
+    --line: #e4e8ee;
+    --bg: #f6f8fb;
+    --white: #ffffff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.6;
+  }
+  a { color: inherit; text-decoration: none; }
+  .container { width: min(1120px, 92%); margin: 0 auto; }
+
+  /* Header */
+  header {
+    background: var(--white);
+    border-bottom: 1px solid var(--line);
+    position: sticky; top: 0; z-index: 10;
+  }
+  .nav { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+  .logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.35rem; color: var(--navy); letter-spacing: -0.02em; }
+  .logo-mark {
+    width: 34px; height: 34px; border-radius: 9px;
+    background: linear-gradient(135deg, var(--blue), var(--navy));
+    display: grid; place-items: center; color: var(--gold); font-size: 1.1rem; font-weight: 800;
+  }
+  .logo span { color: var(--blue); }
+  nav ul { display: flex; gap: 28px; list-style: none; }
+  nav a { font-size: 0.95rem; font-weight: 500; color: var(--muted); transition: color .15s; }
+  nav a:hover { color: var(--blue); }
+
+  /* Hero */
+  .hero {
+    background: radial-gradient(circle at 80% 20%, #1d3f73 0%, var(--navy) 55%);
+    color: var(--white);
+    padding: 96px 0 104px;
+    text-align: center;
+  }
+  .badge {
+    display: inline-block; padding: 6px 14px; border-radius: 999px;
+    background: rgba(245,184,46,.15); color: var(--gold);
+    font-size: .8rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+    margin-bottom: 22px;
+  }
+  .hero h1 { font-size: clamp(2.2rem, 5vw, 3.7rem); line-height: 1.12; letter-spacing: -0.03em; max-width: 820px; margin: 0 auto 20px; }
+  .hero h1 em { font-style: normal; color: var(--gold); }
+  .hero p { max-width: 640px; margin: 0 auto 36px; color: #c5d2e8; font-size: 1.12rem; }
+  .btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .btn { padding: 14px 28px; border-radius: 10px; font-weight: 600; font-size: 1rem; transition: transform .15s, background .15s; }
+  .btn:hover { transform: translateY(-2px); }
+  .btn-primary { background: var(--gold); color: var(--navy); }
+  .btn-primary:hover { background: #ffc94d; }
+  .btn-ghost { border: 1.5px solid rgba(255,255,255,.35); color: var(--white); }
+  .btn-ghost:hover { background: rgba(255,255,255,.08); }
+
+  /* Features strip */
+  .strip { margin-top: -48px; position: relative; z-index: 2; }
+  .strip-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    background: var(--white); border-radius: 16px; border: 1px solid var(--line);
+    box-shadow: 0 14px 40px rgba(11,31,58,.1); overflow: hidden;
+  }
+  .strip-item { padding: 30px 32px; border-right: 1px solid var(--line); }
+  .strip-item:last-child { border-right: none; }
+  .strip-item h3 { font-size: 1.05rem; color: var(--navy); margin-bottom: 6px; }
+  .strip-item p { font-size: .93rem; color: var(--muted); }
+  .icon { font-size: 1.6rem; margin-bottom: 10px; }
+
+  /* Sections */
+  section { padding: 84px 0 0; }
+  .section-head { text-align: center; max-width: 640px; margin: 0 auto 48px; }
+  .section-head h2 { font-size: 2rem; color: var(--navy); letter-spacing: -0.02em; margin-bottom: 10px; }
+  .section-head p { color: var(--muted); }
+
+  .about { display: grid; grid-template-columns: 1.1fr 1fr; gap: 56px; align-items: center; }
+  .about h2 { font-size: 2rem; color: var(--navy); letter-spacing: -0.02em; margin-bottom: 16px; }
+  .about p { color: var(--muted); margin-bottom: 14px; }
+  .about-card {
+    background: var(--navy); color: var(--white); border-radius: 18px; padding: 38px;
+  }
+  .about-card h3 { color: var(--gold); font-size: .85rem; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 14px; }
+  .about-card ul { list-style: none; }
+  .about-card li { padding: 11px 0; border-bottom: 1px solid rgba(255,255,255,.1); color: #d6e0f2; display: flex; gap: 10px; }
+  .about-card li:last-child { border-bottom: none; }
+  .about-card li::before { content: "✓"; color: var(--gold); font-weight: 700; }
+
+  /* Fact categories */
+  .categories { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 24px; }
+  .cat {
+    background: var(--white); border: 1px solid var(--line); border-radius: 16px; padding: 28px;
+    transition: box-shadow .2s, transform .2s;
+  }
+  .cat:hover { box-shadow: 0 12px 30px rgba(11,31,58,.09); transform: translateY(-3px); }
+  .cat-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+  .cat-icon {
+    width: 42px; height: 42px; border-radius: 11px; background: #eaf0ff;
+    display: grid; place-items: center; font-size: 1.25rem;
+  }
+  .cat h3 { font-size: 1.2rem; color: var(--navy); }
+  .cat h3 a:hover { color: var(--blue); }
+  .cat > p { color: var(--muted); font-size: .92rem; margin-bottom: 16px; }
+  .cat ul { list-style: none; border-top: 1px solid var(--line); }
+  .cat li { border-bottom: 1px solid var(--line); }
+  .cat li:last-child { border-bottom: none; }
+  .cat li a {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 11px 2px; font-size: .95rem; color: var(--ink); transition: color .15s, padding .15s;
+  }
+  .cat li a::after { content: "→"; color: var(--blue); opacity: 0; transition: opacity .15s; }
+  .cat li a:hover { color: var(--blue); padding-left: 6px; }
+  .cat li a:hover::after { opacity: 1; }
+
+  /* CTA */
+  .cta {
+    margin-top: 90px;
+    background: linear-gradient(135deg, var(--blue-dark), var(--navy));
+    color: var(--white); text-align: center; padding: 70px 20px; border-radius: 22px;
+  }
+  .cta h2 { font-size: 2rem; letter-spacing: -0.02em; margin-bottom: 10px; }
+  .cta p { color: #cfdcf5; margin-bottom: 26px; }
+
+  /* Footer */
+  footer { margin-top: 90px; background: var(--navy); color: #a9b8d1; padding: 56px 0 28px; }
+  .foot-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+  footer .logo { color: var(--white); margin-bottom: 12px; }
+  footer p { font-size: .92rem; max-width: 300px; }
+  footer h4 { color: var(--white); font-size: .9rem; margin-bottom: 14px; letter-spacing: .04em; }
+  footer ul { list-style: none; }
+  footer li { margin-bottom: 8px; font-size: .92rem; }
+  footer li a:hover { color: var(--gold); }
+  .copy { border-top: 1px solid rgba(255,255,255,.1); padding-top: 22px; font-size: .85rem; text-align: center; }
+
+  @media (max-width: 860px) {
+    nav ul { display: none; }
+    .strip-grid { grid-template-columns: 1fr; }
+    .strip-item { border-right: none; border-bottom: 1px solid var(--line); }
+    .about { grid-template-columns: 1fr; }
+    .foot-grid { grid-template-columns: 1fr 1fr; }
+    .categories { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container nav">
+    <a href="openfacts.html" class="logo"><div class="logo-mark">O</div>Open<span>Facts</span></a>
+    <nav>
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#facts">Browse Facts</a></li>
+        <li><a href="facts/random.html">Random Fact</a></li>
+        <li><a href="facts/all-facts.html">All Facts</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="hero">
+    <div class="container">
+      <div class="badge">The Home of Facts</div>
+      <h1>The website with <em>the most facts</em> on the internet.</h1>
+      <p>OpenFacts brings together an enormous, ever-growing library of clear, well-organized facts, from the deepest oceans to the farthest galaxies.</p>
+      <div class="btns">
+        <a href="#facts" class="btn btn-primary">Browse Facts</a>
+        <a href="facts/random.html" class="btn btn-ghost">Surprise Me</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container strip">
+    <div class="strip-grid">
+      <div class="strip-item">
+        <div class="icon">📚</div>
+        <h3>Largest Collection</h3>
+        <p>More facts across more subjects than anywhere else, all in one place.</p>
+      </div>
+      <div class="strip-item">
+        <div class="icon">🔍</div>
+        <h3>Easy to Explore</h3>
+        <p>Every fact has its own dedicated page, organized by clear categories.</p>
+      </div>
+      <div class="strip-item">
+        <div class="icon">🌍</div>
+        <h3>Open to Everyone</h3>
+        <p>Free to read, simple to share, and built for curious minds of every age.</p>
+      </div>
+    </div>
+  </div>
+
+  <section id="about">
+    <div class="container about">
+      <div>
+        <h2>About OpenFacts</h2>
+        <p>OpenFacts was built on a simple idea: knowledge should be easy to find, easy to understand, and open to all. Our mission is to be the most complete fact library on the web.</p>
+        <p>Each fact lives on its own page, written in plain language so you can learn something new in seconds, or dive deeper whenever you like.</p>
+      </div>
+      <div class="about-card">
+        <h3>Why OpenFacts</h3>
+        <ul>
+          <li>The most facts of any website</li>
+          <li>One page per fact, easy to link and share</li>
+          <li>Organized into clear categories</li>
+          <li>Clean, fast and free to use</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="facts">
+    <div class="container">
+      <div class="section-head">
+        <h2>Explore Our Facts</h2>
+        <p>Choose a category, or open any fact below to start learning.</p>
+      </div>
+
+      <div class="categories">
+
+        <article class="cat">
+          <div class="cat-head"><div class="cat-icon">🔬</div><h3><a href="facts/science/index.html">Science</a></h3></div>
+          <p>Discoveries and principles that explain how the world works.</p>
+          <ul>
+            <li><a href="facts/science/water-boiling-point.html">Water boils at 100°C at sea level</a></li>
+            <li><a href="facts/science/speed-of-light.html">Light travels about 299,792 km every second</a></li>
+            <li><a href="facts/science/atoms-mostly-empty-space.html">Atoms are mostly empty space</a></li>
+            <li><a href="facts/science/dna-shared-with-bananas.html">Humans share about 60% of genes with bananas</a></li>
+            <li><a href="facts/science/diamonds-are-carbon.html">Diamonds are made of pure carbon</a></li>
+          </ul>
+        </article>
+
+        <article class="cat">
+          <div class="cat-head"><div class="cat-icon">🚀</div><h3><a href="facts/space/index.html">Space</a></h3></div>
+          <p>Planets, stars and the vast universe beyond Earth.</p>
+          <ul>
+            <li><a href="facts/space/sun-light-travel-time.html">Sunlight takes about 8 minutes to reach Earth</a></li>
+            <li><a href="facts/space/venus-day-longer-than-year.html">A day on Venus is longer than its year</a></li>
+            <li><a href="facts/space/jupiter-great-red-spot.html">Jupiter's Great Red Spot is a giant storm</a></li>
+            <li><a href="facts/space/neutron-star-density.html">A teaspoon of neutron star weighs billions of tons</a></li>
+            <li><a href="facts/space/moon-moving-away.html">The Moon drifts away from Earth every year</a></li>
+          </ul>
+        </article>
+
+        <article class="cat">
+          <div class="cat-head"><div class="cat-icon">🏛️</div><h3><a href="facts/history/index.html">History</a></h3></div>
+          <p>People, empires and events that shaped our world.</p>
+          <ul>
+            <li><a href="facts/history/cleopatra-closer-to-moon-landing.html">Cleopatra lived closer in time to the Moon landing than to the pyramids</a></li>
+            <li><a href="facts/history/great-wall-of-china.html">The Great Wall was built over many centuries</a></li>
+            <li><a href="facts/history/printing-press.html">The printing press arrived in Europe around 1440</a></li>
+            <li><a href="facts/history/oxford-older-than-aztecs.html">Oxford University is older than the Aztec Empire</a></li>
+            <li><a href="facts/history/moon-landing-1969.html">Humans first walked on the Moon in 1969</a></li>
+          </ul>
+        </article>
+
+        <article class="cat">
+          <div class="cat-head"><div class="cat-icon">🌿</div><h3><a href="facts/nature/index.html">Nature &amp; Animals</a></h3></div>
+          <p>Remarkable creatures and the ecosystems they call home.</p>
+          <ul>
+            <li><a href="facts/nature/octopus-three-hearts.html">Octopuses have three hearts</a></li>
+            <li><a href="facts/nature/honey-never-spoils.html">Honey can last for thousands of years</a></li>
+            <li><a href="facts/nature/blue-whale-largest-animal.html">The blue whale is the largest animal ever known</a></li>
+            <li><a href="facts/nature/trees-communicate.html">Trees share nutrients through underground fungal networks</a></li>
+            <li><a href="facts/nature/sharks-older-than-trees.html">Sharks are older than trees</a></li>
+          </ul>
+        </article>
+
+        <article class="cat">
+          <div class="cat-head"><div class="cat-icon">🗺️</div><h3><a href="facts/geography/index.html">Geography</a></h3></div>
+          <p>Countries, landscapes and natural wonders of Earth.</p>
+          <ul>
+            <li><a href="facts/geography/russia-eleven-time-zones.html">Russia spans eleven time zones</a></li>
+            <li><a href="facts/geography/mount-everest-height.html">Mount Everest is about 8,849 m tall</a></li>
+            <li><a href="facts/geography/pacific-ocean-size.html">The Pacific is larger than all land combined</a></li>
+            <li><a href="facts/geography/canada-longest-coastline.html">Canada has the world's longest coastline</a></li>
+            <li><a href="facts/geography/sahara-desert.html">The Sahara is roughly the size of the United States</a></li>
+          </ul>
+        </article>
+
+        <article class="cat">
+          <div class="cat-head"><div class="cat-icon">💻</div><h3><a href="facts/technology/index.html">Technology</a></h3></div>
+          <p>Inventions and innovations that power modern life.</p>
+          <ul>
+            <li><a href="facts/technology/first-website.html">The first website went live in 1991</a></li>
+            <li><a href="facts/technology/first-computer-bug.html">The first computer "bug" was a real moth</a></li>
+            <li><a href="facts/technology/qwerty-keyboard.html">The QWERTY layout dates back to the 1870s</a></li>
+            <li><a href="facts/technology/gps-satellites.html">GPS relies on a constellation of satellites</a></li>
+            <li><a href="facts/technology/first-text-message.html">The first text message was sent in 1992</a></li>
+          </ul>
+        </article>
+
+        <article class="cat">
+          <div class="cat-head"><div class="cat-icon">🧠</div><h3><a href="facts/human-body/index.html">Human Body</a></h3></div>
+          <p>Surprising facts about how we are built.</p>
+          <ul>
+            <li><a href="facts/human-body/bones-in-adult-body.html">Adults have 206 bones</a></li>
+            <li><a href="facts/human-body/brain-uses-20-percent-energy.html">The brain uses about 20% of the body's energy</a></li>
+            <li><a href="facts/human-body/heart-beats-per-day.html">The heart beats around 100,000 times a day</a></li>
+            <li><a href="facts/human-body/skin-largest-organ.html">Skin is the body's largest organ</a></li>
+            <li><a href="facts/human-body/stomach-acid.html">Stomach acid is strong enough to dissolve metal</a></li>
+          </ul>
+        </article>
+
+        <article class="cat">
+          <div class="cat-head"><div class="cat-icon">🔢</div><h3><a href="facts/mathematics/index.html">Mathematics</a></h3></div>
+          <p>Numbers, patterns and the logic behind them.</p>
+          <ul>
+            <li><a href="facts/mathematics/pi-never-ends.html">Pi has no end and never repeats</a></li>
+            <li><a href="facts/mathematics/zero-invented.html">The concept of zero developed in ancient India</a></li>
+            <li><a href="facts/mathematics/prime-numbers-infinite.html">There are infinitely many prime numbers</a></li>
+            <li><a href="facts/mathematics/fibonacci-in-nature.html">Fibonacci numbers appear throughout nature</a></li>
+            <li><a href="facts/mathematics/googol.html">A googol is 1 followed by 100 zeros</a></li>
+          </ul>
+        </article>
+
+        <article class="cat">
+          <div class="cat-head"><div class="cat-icon">🎭</div><h3><a href="facts/culture/index.html">Culture &amp; Arts</a></h3></div>
+          <p>Language, music, food and traditions around the globe.</p>
+          <ul>
+            <li><a href="facts/culture/mandarin-most-native-speakers.html">Mandarin has the most native speakers worldwide</a></li>
+            <li><a href="facts/culture/mona-lisa.html">The Mona Lisa hangs in the Louvre in Paris</a></li>
+            <li><a href="facts/culture/olympics-ancient-origin.html">The Olympic Games began in ancient Greece</a></li>
+            <li><a href="facts/culture/chess-origins.html">Chess evolved from a game played in India</a></li>
+            <li><a href="facts/culture/piano-88-keys.html">A standard piano has 88 keys</a></li>
+          </ul>
+        </article>
+
+      </div>
+
+      <div class="cta">
+        <h2>Ready to learn something new?</h2>
+        <p>Dive into the full OpenFacts library or let us pick a fact for you.</p>
+        <div class="btns">
+          <a href="facts/all-facts.html" class="btn btn-primary">View All Facts</a>
+          <a href="facts/random.html" class="btn btn-ghost">Random Fact</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="foot-grid">
+      <div>
+        <div class="logo"><div class="logo-mark">O</div>OpenFacts</div>
+        <p>The website with the most facts. Free, open and built for curious minds.</p>
+      </div>
+      <div>
+        <h4>Categories</h4>
+        <ul>
+          <li><a href="facts/science/index.html">Science</a></li>
+          <li><a href="facts/space/index.html">Space</a></li>
+          <li><a href="facts/history/index.html">History</a></li>
+          <li><a href="facts/nature/index.html">Nature &amp; Animals</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>More</h4>
+        <ul>
+          <li><a href="facts/geography/index.html">Geography</a></li>
+          <li><a href="facts/technology/index.html">Technology</a></li>
+          <li><a href="facts/human-body/index.html">Human Body</a></li>
+          <li><a href="facts/mathematics/index.html">Mathematics</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>OpenFacts</h4>
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="facts/all-facts.html">All Facts</a></li>
+          <li><a href="facts/random.html">Random Fact</a></li>
+          <li><a href="facts/culture/index.html">Culture &amp; Arts</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="copy">© 2026 OpenFacts. All rights reserved.</div>
+  </div>
+</footer>
+
+</body>
+</html>
